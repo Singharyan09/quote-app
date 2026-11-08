@@ -1,0 +1,41 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Status {
+  NEW
+  CONTACTED
+  QUOTED
+  WON
+  LOST
+}
+
+model Inquiry {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  status        Status   @default(NEW)
+
+  name          String
+  phone         String
+  email         String
+  companyName   String
+
+  collStreet    String
+  collSuburb    String
+  collState     String
+  collPostcode  String
+
+  delStreet     String
+  delSuburb     String
+  delState      String
+  delPostcode   String
+
+  forklift      String   // "yes" | "no" | "unsure"
+  notes         String?
+}
